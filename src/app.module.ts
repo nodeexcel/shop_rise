@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service'
 import { userModule } from './user/user.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { userModule } from './user/user.module';
     entities: ["dist/**/*.entity{.ts,.js}"],
     synchronize: true
   }),
-   userModule
+   userModule,
+   ProductModule
   ],
   controllers: [AppController],
   providers: [AppService],
