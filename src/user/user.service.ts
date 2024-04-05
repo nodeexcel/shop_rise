@@ -32,11 +32,11 @@ export class UserService{
 
   }
 
-//   async updateProfile(id:number ,userProfile:Iprofile): Promise<Iprofile> {
-//     const profile = await this.profileRepository.findOne({where:{id}});
-//     const newProfile = this.profileRepository.merge(profile, userProfile)
-//     return await this.profileRepository.save(newProfile)
-//   }
+  async resetPassword(id:number , updatedPassword:string): Promise<User | null> {
+    const user = await this.userRepository.findOne({where:{id}})
+    const newUser =this.userRepository.merge(user, {password:updatedPassword})
+    return await this.userRepository.save(newUser)
+  }
 
 //   async updateProfileImg(id:number ,profileImgPath:string): Promise<Iassets> {
 //     const assets = await this.assetsRepository.findOne({where:{id}});
