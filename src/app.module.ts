@@ -6,6 +6,7 @@ import { AppService } from './app.service'
 import { userModule } from './user/user.module';
 import { DatabaseModule } from './db/database.module';
 import * as Joi from 'joi'
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import * as Joi from 'joi'
       }),
     }),
     DatabaseModule,
-    userModule
+    userModule,
+   ProductModule
   ],
   controllers: [AppController],
   providers: [AppService],
