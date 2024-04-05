@@ -4,21 +4,26 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service'
 import { userModule } from './user/user.module';
+import { DatabaseModule } from './db/database.module';
+import * as Joi from 'joi'
 
 @Module({
   imports: [
-  ConfigModule.forRoot(),  
-  TypeOrmModule.forRoot({
-    type: 'mysql',
-    host:process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT),
-    username:process.env.DB_USERNAME,
-    password:process.env.DB_PASSWORD,
-    database:process.env.DB_NAME,
-    entities: ["dist/**/*.entity{.ts,.js}"],
-    synchronize: true
-  }),
-   userModule
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+      validationSchema: Joi.object({
+      PORT: Joi.number().default(3000),
+      NODE_ENV: Joi.string().default('development'),
+      DB_HOST: Joi.string().required(),
+      DB_PORT: Joi.number().required(),
+      DB_USERNAME: Joi.string().required(),
+      DB_PASSWORD: Joi.string().required(),
+      DB_NAME: Joi.string().required(),
+      }),
+    }),
+    DatabaseModule,
+    userModule
   ],
   controllers: [AppController],
   providers: [AppService],
